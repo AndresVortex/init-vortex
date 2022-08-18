@@ -6,7 +6,7 @@ import cors from 'cors'
 import { errorHandler, boomErrorHandler, ormErrorHandler, logErrors } from '../middlewares/error.handler'
 import routesApi from '../routes'
 
-
+import * as passportStrategies from '../utils/auth'
 
 
 class Server {
@@ -51,6 +51,7 @@ class Server {
       }
     }
     this.app.use(cors(options));
+    passportStrategies
   }
 
   logErrors(){

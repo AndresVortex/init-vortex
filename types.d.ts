@@ -1,8 +1,7 @@
+import IUser from './src/core/entities/User';
+
 declare namespace Express {
   export interface Request {
-    user: {
-      sub: number,
-      role: string,
-    }
+    user?: IUser
   }
 }

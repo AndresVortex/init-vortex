@@ -1,10 +1,8 @@
-import User from '../entities/User';
+import IUser from '../entities/User';
 
-export interface userJwt {
-  user: User,
-  token: string
-}
+
 export default interface AuthRepository {
-  signToken(user: User): string;
-  sendRecovery(email: User['email']): Promise<void>;
+  getUser(email: string, password: string): Promise<IUser>
+  signToken(user?: IUser ): string;
+  sendRecovery(email: IUser['email']): Promise<void>;
 }
