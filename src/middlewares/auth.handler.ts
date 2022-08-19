@@ -14,7 +14,7 @@ import  { config } from '../config'
 // }
 
 function checkAdminRole(req: Request, res: Response, next: NextFunction){
-  const user = req.user;
+  const user: any = req.user;
   if(user.role === 'admin'){
     next()
   }else {
@@ -24,7 +24,7 @@ function checkAdminRole(req: Request, res: Response, next: NextFunction){
 
 function checkRoles (...roles: string[]){
   return (req: Request, res: Response, next: NextFunction ) => {
-    const user = req.user;
+    const user: any = req.user;
   if(roles.includes(user.role)){
     next()
   }else {

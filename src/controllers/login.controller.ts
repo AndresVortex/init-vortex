@@ -14,13 +14,7 @@ const Login = async(req: Request, res: Response, next: NextFunction) => {
     }
     const token = login.generateToken(data)
 
-
-
     return respuesta(res, true, 200, 'Registro completado', {user, token} )
-
-
-
-
 
   } catch (error) {
     next(error)

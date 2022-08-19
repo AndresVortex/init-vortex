@@ -8,7 +8,7 @@ import { createUserSchema } from '../schemas/createUser.schema'
 const router = Router()
 
 
-router.post('/register', validatorHandler(createUserSchema, 'body'), registerUser)
+router.post('/register',passport.authenticate('jwt', { session: false }), validatorHandler(createUserSchema, 'body'), registerUser)
 
 router.get('/login', passport.authenticate('local', {session: false}), Login)
 

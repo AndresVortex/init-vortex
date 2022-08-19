@@ -7,7 +7,7 @@ import respuesta from '../helpers/respuesta'
 const registerUser = async(req: Request, res: Response, next: NextFunction) => {
   try {
     const { body } = req
-    console.log(body)
+
     const user = await saveUser(body)
 
     return respuesta(res, true, 200, 'Registro completado', user)
