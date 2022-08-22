@@ -8,6 +8,8 @@ export default interface IUser {
   password: string,
   dateBirth: Date,
   role: string,
+  status: boolean,
+  login: boolean,
   recoveryToken?: string,
   createdAt?: Date,
   updatedAt?: Date,
@@ -15,7 +17,7 @@ export default interface IUser {
 
 }
 
-export interface CreateUser extends Omit<IUser, 'id' | 'createdAt' | 'updatedAt'> {
+export interface CreateUser extends Omit<IUser, 'id' | 'createdAt' | 'updatedAt' > {
   //añadir relaciones
 }
 

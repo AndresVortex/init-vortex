@@ -6,7 +6,7 @@ import respuesta from '../helpers/respuesta'
 import IUser from '../core/entities/User';
 
 
-const loginUser = async(req: Request, res: Response, next: NextFunction) => {
+const logOut = async(req: Request, res: Response, next: NextFunction) => {
   try {
     const user: any = req.user
     const data: IUser = {
@@ -26,4 +26,4 @@ const loginUser = async(req: Request, res: Response, next: NextFunction) => {
 
 
 
-export default loginUser
+export default logOut

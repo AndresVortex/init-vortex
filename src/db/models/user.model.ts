@@ -16,6 +16,8 @@ export class User extends Model<IUser, CreateUser> {
   public password!: IUser['password']
   public dateBirth!: IUser['dateBirth']
   public role!: IUser['role']
+  public status!: IUser['status']
+  public login!: IUser['login']
   public recoveryToken!: IUser['recoveryToken']
 
 
@@ -72,6 +74,16 @@ export const userSchema = {
   role: {
     type: DataTypes.STRING,
     allowNull: false
+  },
+  status: {
+    type: DataTypes.BOOLEAN,
+    allowNull: false,
+    defaultValue: false
+  },
+  login: {
+    type: DataTypes.BOOLEAN,
+    allowNull: false,
+    defaultValue: false
   },
   recoveryToken: {
     allowNull: true,

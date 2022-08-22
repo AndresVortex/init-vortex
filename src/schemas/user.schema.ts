@@ -24,7 +24,6 @@ export const updateUserSchema = Joi.object({
   lastName,
   dateBirth,
   email,
-  password,
   role,
 })
 export const getUserSchema = Joi.object({
