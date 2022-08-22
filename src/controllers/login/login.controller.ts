@@ -1,9 +1,9 @@
 // import saveUser from '../core/interactors'
-import {login} from '../core/interactors'
+import {login} from '../../core/interactors'
 
 import {Request, Response, NextFunction} from 'express'
-import respuesta from '../helpers/respuesta'
-import IUser from '../core/entities/User';
+import respuesta from '../../helpers/respuesta'
+import IUser from '../../core/entities/User';
 
 
 const loginUser = async(req: Request, res: Response, next: NextFunction) => {
@@ -12,7 +12,7 @@ const loginUser = async(req: Request, res: Response, next: NextFunction) => {
     const data: IUser = {
       ...user.dataValues
     }
-    console.log({data})
+
     const token = login.generateToken(data)
     const userLogin = await login.changeLogin(data.id, true )
 

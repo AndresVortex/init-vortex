@@ -1,7 +1,7 @@
-import User from "../entities/User";
-import UserRepository from '../repositories/userRepository';
-import NotifierRepository from "../repositories/notifierRespository";
-import AuthRepository from '../repositories/authRepository';
+import User from "../../entities/User";
+import UserRepository from '../../repositories/userRepository';
+import NotifierRepository from "../../repositories/notifierRespository";
+import AuthRepository from '../../repositories/authRepository';
 
 const saveUser = (
   userRepository: UserRepository,

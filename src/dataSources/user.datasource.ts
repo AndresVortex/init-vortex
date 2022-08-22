@@ -55,4 +55,10 @@ export default class UserDataSource implements UserRepository {
 
     return userUpdate[1][0]
   }
+  async find(): Promise<IUser[]> {
+    const user = await UserModel.findAll()
+
+    return user
+
+  }
 }

@@ -8,7 +8,7 @@ const dateBirth = Joi.date();
 const email = Joi.string().email();
 const password = Joi.string().min(8);
 const role = Joi.string().min(5);
-
+const status = Joi.boolean()
 
 export const createUserSchema = Joi.object({
   name: name.required(),
@@ -25,6 +25,10 @@ export const updateUserSchema = Joi.object({
   dateBirth,
   email,
   role,
+})
+export const changeStatusUserSchema = Joi.object({
+  status: status.required()
+
 })
 export const getUserSchema = Joi.object({
   id: id.required(),

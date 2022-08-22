@@ -1,10 +1,11 @@
-import AuthRepository from "../repositories/authRepository";
-import IUser from '../entities/User';
-import UserRepository from '../repositories/userRepository';
+import AuthRepository from "../../repositories/authRepository";
+import IUser from '../../entities/User';
+import UserRepository from '../../repositories/userRepository';
 
 
 // const  generateToken = (authRepository: AuthRepository) =>
 //  (user: IUser):string => {
+
 
 //   const token = authRepository.signToken(user)
 

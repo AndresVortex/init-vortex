@@ -1,7 +1,7 @@
 
-import saveUser from '../core/interactors'
+import saveUser from '../../core/interactors'
 import {Request, Response, NextFunction} from 'express'
-import respuesta from '../helpers/respuesta'
+import respuesta from '../../helpers/respuesta'
 
 
 const registerUser = async(req: Request, res: Response, next: NextFunction) => {
