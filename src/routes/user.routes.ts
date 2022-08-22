@@ -22,7 +22,7 @@ router.put('/edit/:id',
   updateUser
 )
 
-router.get('/login',
+router.post('/login',
   passport.authenticate('local', {session: false}),
   Login
 )
