@@ -1,9 +1,14 @@
 import IUser from '../entities/User';
 
+export interface Payload {
+  sub: number,
+  role: string,
+}
 
 export default interface AuthRepository {
   getUser(email: string, password: string): Promise<IUser>
-  signToken(user?: IUser ): string;
+  signToken(payload: Payload ): string;
   sendRecovery(email: IUser['email']): Promise<void>;
-  changePassword(token: string, newPassword: IUser['password']): void
+  changePassword(token: string, newPassword: IUser['password']): Promise<void>
+  refreshToken(token: string): Promise<string>;
 }

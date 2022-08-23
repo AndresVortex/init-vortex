@@ -2,15 +2,7 @@ import IUser, { UpdateUser } from '../../entities/User';
 import UserRepository from '../../repositories/userRepository';
 
 
-// const  generateToken = (authRepository: AuthRepository) =>
-//  (user: IUser):string => {
 
-//   const token = authRepository.signToken(user)
-
-//   return token
-
-// }
-// export default generateToken
 
 export default class UpdateUsers {
 

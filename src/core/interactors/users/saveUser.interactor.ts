@@ -13,7 +13,6 @@ const saveUser = (
   //Crear usuario
   const newUser = await userRepository.create(user)
 
-  // const token  = await  authRepository.signToken(newUser)
   //Notificar por correo al usuario creado
   notifierRepository.notifyUser(newUser)
 

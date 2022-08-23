@@ -34,9 +34,9 @@ export default class UserDataSource implements UserRepository {
     return user
   }
   async getById(id: number): Promise<IUser> {
-    console.log(id)
+
     const user = await UserModel.findByPk(id)
-    console.log(user)
+
     if (!user) {
       throw Boom.badRequest()
     }

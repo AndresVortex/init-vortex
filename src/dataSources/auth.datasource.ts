@@ -10,21 +10,16 @@ import AuthRepository from '../core/repositories/authRepository';
 
 import UserDataSource from './user.datasource'
 import EmailNotifier from './emailNotify.datasource';
+import { Payload } from '../core/repositories/authRepository';
 const userDataSource = new UserDataSource()
 const emailDataSource = new EmailNotifier()
-interface PayloadJwt {
-  sub: number,
-  role: string,
-}
+
 
 export default class AuthDataSource implements AuthRepository {
   constructor(){}
-  signToken(user: IUser): string {
-    const payload = {
-      sub: user.id,
-      role: user.role
-    }
-    const token = jwt.sign(payload, config.secret)
+  signToken(payload: Payload): string {
+
+    const token = jwt.sign(payload, config.secret, {expiresIn: '2h'})
     return token
   }
   async sendRecovery(email: string): Promise<void> {
@@ -48,9 +43,9 @@ export default class AuthDataSource implements AuthRepository {
   }
   async getUser(email: string, password: string): Promise<IUser> {
     const user = await userDataSource.getByEmail(email)
-    console.log(user)
+
     const isMatch = await bcrypt.compare(password, user.password)
-    console.log(isMatch)
+
     if(!isMatch){
       throw (boom.unauthorized())
     }
@@ -75,6 +70,16 @@ export default class AuthDataSource implements AuthRepository {
 
   }
 
+  async refreshToken(token: string): Promise<string> {
+    const payload = jwt.verify(token, config.secret)
+    console.log({payload})
+    const id = parseInt(payload.sub as string)
+    const { login } = await userDataSource.getById(id)
+    if(!login){
+      throw boom.unauthorized('No tiene sesión iniciada')
+    }
 
+    return ''
+  }
 
 }

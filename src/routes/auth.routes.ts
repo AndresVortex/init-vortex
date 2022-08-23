@@ -7,6 +7,7 @@ import recoveryPassword from '../controllers/auth/recoveryPassword.controller'
 import validatorHandler from '../middlewares/validator.handler';
 import { recoveryPassSchema, changePasswordSchema } from '../schemas/auth.schema';
 import changePassword from '../controllers/auth/changePassword.controller';
+import refreshToken from '../controllers/auth/refreshToken.controller'
 
 
 const router = Router()
@@ -28,6 +29,10 @@ router.post('/recovery', validatorHandler(recoveryPassSchema, 'body'), recoveryP
 
 //Ruta para cambiar la contraseña
 router.post('/change-password', validatorHandler(changePasswordSchema, 'body'), changePassword)
+
+
+//Ruta para refrescar token
+router.get('/refresh-token', passport.authenticate('jwt', {session: false} ), refreshToken )
 
 export default router
 

@@ -1,18 +1,10 @@
 import AuthRepository from "../../repositories/authRepository";
 import IUser from '../../entities/User';
 import UserRepository from '../../repositories/userRepository';
+import { Payload } from '../../repositories/authRepository';
 
 
-// const  generateToken = (authRepository: AuthRepository) =>
-//  (user: IUser):string => {
 
-
-//   const token = authRepository.signToken(user)
-
-//   return token
-
-// }
-// export default generateToken
 
 export default class Auth {
 
@@ -24,8 +16,8 @@ export default class Auth {
     this.userRepository = userRepository
   }
 
-  generateToken(user?: IUser ):string {
-    const token = this.authRepository.signToken(user)
+  generateToken(payload: Payload):string {
+    const token = this.authRepository.signToken(payload)
     return token
   }
   async changeStatus(id:IUser['id'], status: IUser['status'] ): Promise<IUser> {
