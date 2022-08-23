@@ -3,7 +3,6 @@ import { userUpdates} from '../../core/interactors'
 
 import {Request, Response, NextFunction} from 'express'
 import respuesta from '../../helpers/respuesta'
-import IUser from '../../core/entities/User';
 
 
 const logOut = async(req: Request, res: Response, next: NextFunction) => {

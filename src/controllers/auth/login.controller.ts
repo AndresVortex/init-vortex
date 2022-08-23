@@ -1,5 +1,5 @@
 // import saveUser from '../core/interactors'
-import {login} from '../../core/interactors'
+import {auth} from '../../core/interactors'
 
 import {Request, Response, NextFunction} from 'express'
 import respuesta from '../../helpers/respuesta'
@@ -13,8 +13,8 @@ const loginUser = async(req: Request, res: Response, next: NextFunction) => {
       ...user.dataValues
     }
 
-    const token = login.generateToken(data)
-    const userLogin = await login.changeLogin(data.id, true )
+    const token = auth.generateToken(data)
+    const userLogin = await auth.changeLogin(data.id, true )
 
     return respuesta(res, true, 200, 'Registro completado', {user: userLogin, token} )
 

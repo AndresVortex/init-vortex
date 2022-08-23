@@ -1,6 +1,6 @@
 import {Express, Router} from 'express'
 import usersRouter from './user.routes'
-import loginRouter from './login.routes'
+import loginRouter from './auth.routes'
 import validatorSession from '../middlewares/validate.sesion';
 
 

@@ -10,7 +10,9 @@ export const config = {
   dbName: process.env.DB_NAME as string,
   emailUser: process.env.EMAIL_USER as string,
   emailPass: process.env.EMAIL_PASS as string,
-  secret: process.env.SECRET as string
+  secret: process.env.SECRET as string,
+  secretPassword: process.env.SECRET_PASSWORD as string,
+
 
 }
 

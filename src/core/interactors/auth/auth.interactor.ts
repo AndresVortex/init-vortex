@@ -14,7 +14,7 @@ import UserRepository from '../../repositories/userRepository';
 // }
 // export default generateToken
 
-export default class Login {
+export default class Auth {
 
   constructor(
     private readonly authRepository: AuthRepository,
@@ -37,5 +37,12 @@ export default class Login {
     const  userLogin = await this.userRepository.update(id, {login})
     return userLogin
 
+  }
+  async recovery(email: IUser['email']):Promise<void>{
+
+    return this.authRepository.sendRecovery(email)
+  }
+  async changePassword(token: string, newPassword: string):Promise<void>{
+    return this.authRepository.changePassword(token, newPassword)
   }
 }
