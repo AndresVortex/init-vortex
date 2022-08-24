@@ -1,6 +1,7 @@
-import {Model, DataType, Sequelize, DataTypes} from 'sequelize'
+import {Model, DataType, Sequelize, DataTypes, ModelStatic} from 'sequelize'
 import IUser from '../../core/entities/User'
 import { CreateUser } from '../../core/entities/User';
+import Role, {ROLE_TABLE} from './role.model';
 
 export const USER_TABLET = ' users'
 
@@ -15,7 +16,7 @@ export class User extends Model<IUser, CreateUser> {
   public email!: IUser['email']
   public password!: IUser['password']
   public dateBirth!: IUser['dateBirth']
-  public role!: IUser['role']
+  public roleId!: IUser['roleId']
   public status!: IUser['status']
   public login!: IUser['login']
   public recoveryToken!: IUser['recoveryToken']
@@ -29,8 +30,9 @@ export class User extends Model<IUser, CreateUser> {
 
 
   //methods
-  static associate() {
+  static associate( model: ModelStatic<Role>) {
     //models associate
+    this.belongsTo(model, {as: 'role'})
   }
   static config(sequelize: Sequelize) {
     return {
@@ -71,10 +73,7 @@ export const userSchema = {
     allowNull: true,
     field: 'date_birth'
   },
-  role: {
-    type: DataTypes.STRING,
-    allowNull: false
-  },
+
   status: {
     type: DataTypes.BOOLEAN,
     allowNull: false,
@@ -89,6 +88,18 @@ export const userSchema = {
     allowNull: true,
     field: 'recovery_token',
     type: DataTypes.STRING,
+  },
+  roleId: {
+    field: 'role_id',
+    type: DataTypes.INTEGER,
+    allowNull: false,
+    references: {
+      model: ROLE_TABLE,
+      key: 'id'
+    },
+    onUpdate: 'CASCADE',
+    onDelete: 'SET NULL'
+
   },
 }
 

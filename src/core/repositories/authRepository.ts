@@ -2,7 +2,7 @@ import IUser from '../entities/User';
 
 export interface Payload {
   sub: number,
-  role: string,
+  role: IUser['roleId'],
 }
 
 export default interface AuthRepository {

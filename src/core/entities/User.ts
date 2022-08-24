@@ -7,7 +7,7 @@ export default interface IUser {
   email: string,
   password: string,
   dateBirth: Date,
-  role: string,
+  roleId: number,
   status: boolean,
   login: boolean,
   recoveryToken?: string,
