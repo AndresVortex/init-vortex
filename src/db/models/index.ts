@@ -11,6 +11,7 @@ export default function setupModels(sequelize: Sequelize){
 
 
   //associates
+  Role.associate(User)
   User.associate(Role)
 }
 

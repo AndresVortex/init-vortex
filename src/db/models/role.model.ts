@@ -1,9 +1,10 @@
-import {Model, DataType, Sequelize, DataTypes} from 'sequelize'
-import IRole, {CreateRole} from '../../core/entities/Role';
+import {Model, DataType, Sequelize, DataTypes, ModelStatic} from 'sequelize'
+import IRole, {ICreateRole} from '../../core/entities/Role';
+import User from './user.model';
 
 export const ROLE_TABLE = 'roles'
 
-export default class Role extends Model<IRole, CreateRole>{
+export default class Role extends Model<IRole, ICreateRole>{
   public id!: IRole['id']
   public name!: IRole['name']
   public description!: IRole['description']
@@ -14,8 +15,9 @@ export default class Role extends Model<IRole, CreateRole>{
 
 
   //methods
-  static associate() {
+  static associate(model: ModelStatic<User>) {
     //models associate
+    this.hasMany(model, {as: 'users', foreignKey: 'roleId'})
   }
   static config(sequelize: Sequelize) {
     return {

@@ -1,6 +1,7 @@
 import Role, { ICreateRole, IUpdateRole } from '../core/entities/Role';
 import RoleRepository from '../core/repositories/roleRepository';
 import RoleModel from '../db/models/role.model';
+import boom from '@hapi/boom';
 
 
 export default class RoleDataSource implements RoleRepository {
@@ -11,8 +12,13 @@ export default class RoleDataSource implements RoleRepository {
     return newRole
 
   }
-  getOne(id: number): Promise<Role> {
-    throw new Error('Method not implemented.');
+  async getOne(id: number): Promise<Role> {
+    const role = await RoleModel.findByPk(id, {include: ['users']})
+    if(!role){
+      throw boom.notFound('No se encuentra el rol')
+    }
+
+    return role
   }
   get(): Promise<Role[]> {
     throw new Error('Method not implemented.');

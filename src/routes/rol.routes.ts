@@ -7,6 +7,7 @@ import { createRoleSchema, updateRoleSchema, getRoleSchema} from '../schemas/rol
 import changePassword from '../controllers/auth/changePassword.controller';
 import refreshToken from '../controllers/auth/refreshToken.controller'
 import createRole from '../controllers/roles/createRole.controller'
+import getDetailRole from '../controllers/roles/getDetailRole.controller';
 
 
 const router = Router()
@@ -24,7 +25,7 @@ router.get('/' , changePassword)
 
 
 //Ruta para ver el detalle de un  rol
-router.get('/:id',validatorHandler(getRoleSchema, 'params') , refreshToken )
+router.get('/:id',validatorHandler(getRoleSchema, 'params') , getDetailRole )
 
 //Ruta para actualizar un rol
 router.put('/:id', validatorHandler(updateRoleSchema, 'body'), validatorHandler(getRoleSchema, 'params'), recoveryPassword )

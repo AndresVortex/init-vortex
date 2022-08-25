@@ -32,7 +32,7 @@ export class User extends Model<IUser, CreateUser> {
   //methods
   static associate( model: ModelStatic<Role>) {
     //models associate
-    this.belongsTo(model, {as: 'role'})
+    this.belongsTo(model, { as: 'role' })
   }
   static config(sequelize: Sequelize) {
     return {
