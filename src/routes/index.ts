@@ -10,7 +10,7 @@ import { userRepository } from '../core/interactors/index';
 export default function routesApi(app: Express) {
   const router = Router()
   app.use('/api/v1', router)
-  router.use('/rol',passport.authenticate('jwt', {session: false} ), validatorSession(userRepository), rolRouter)
+  router.use('/role',passport.authenticate('jwt', {session: false} ), validatorSession(userRepository), rolRouter)
   router.use('/', loginRouter )
   router.use('/user', usersRouter )
 

@@ -7,8 +7,8 @@ export default interface IRole  {
   updatedAt?: Date,
 }
 
-export interface CreateRole extends Omit<IRole, 'id' | 'createdAt' | 'updatedAt' > {
+export interface ICreateRole extends Omit<IRole, 'id' | 'createdAt' | 'updatedAt' > {
   //añadir relaciones
 }
 
-export interface UpdateRole extends Partial<CreateRole> {}
+export interface IUpdateRole extends Partial<ICreateRole> {}
