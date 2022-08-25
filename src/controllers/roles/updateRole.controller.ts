@@ -6,7 +6,7 @@ const updateRole = async (req: Request, res: Response, next: NextFunction) => {
 
   try {
     const change = req.body
-    console.log({change})
+
     const id = parseInt(req.params.id)
     const newRol = await updateRoles.handle(id, change)
 

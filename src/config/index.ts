@@ -17,3 +17,8 @@ export const config = {
 }
 
 
+export const roles = {
+  admin: 1,
+  customer: 2,
+
+}

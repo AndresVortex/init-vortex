@@ -13,7 +13,7 @@ import  { config } from '../config'
 
 // }
 
-function checkAdminRole(req: Request, res: Response, next: NextFunction){
+export function checkAdminRole(req: Request, res: Response, next: NextFunction){
   const user: any = req.user;
   if(user.role === 'admin'){
     next()
@@ -22,16 +22,16 @@ function checkAdminRole(req: Request, res: Response, next: NextFunction){
   }
 }
 
-function checkRoles (...roles: string[]){
+export function checkRoles (...roles: number[]){
   return (req: Request, res: Response, next: NextFunction ) => {
     const user: any = req.user;
-  if(roles.includes(user.role)){
+    console.log({user})
+  if(roles.includes(parseInt(user.role))){
     next()
   }else {
-    next(boom.unauthorized())
+    next(boom.unauthorized('No tiene los permisos necesarios'))
   }
   }
 }
 
 
-module.exports = {  checkAdminRole, checkRoles }

@@ -72,7 +72,7 @@ export default class AuthDataSource implements AuthRepository {
 
   async refreshToken(token: string): Promise<string> {
     const payload = jwt.verify(token, config.secret)
-    console.log({payload})
+
     const id = parseInt(payload.sub as string)
     const { login } = await userDataSource.getById(id)
     if(!login){

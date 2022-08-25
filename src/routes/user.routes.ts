@@ -7,6 +7,8 @@ import validatorSession from '../middlewares/validate.sesion'
 import validatorHandler from '../middlewares/validator.handler'
 import { changeStatusUserSchema, createUserSchema, getUserSchema, updateUserSchema } from '../schemas/user.schema'
 import { userRepository } from '../core/interactors/index';
+import { checkRoles } from '../middlewares/auth.handler'
+import { roles } from '../config'
 
 const router = Router()
 
@@ -21,6 +23,7 @@ router.post('/register',
 router.put('/edit/:id',
   passport.authenticate('jwt', { session: false }),
   validatorSession(userRepository),
+  checkRoles(roles.admin),
   validatorHandler(getUserSchema, 'params'),
   validatorHandler(updateUserSchema, 'body'),
   updateUser
