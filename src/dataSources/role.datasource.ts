@@ -20,14 +20,25 @@ export default class RoleDataSource implements RoleRepository {
 
     return role
   }
-  get(): Promise<Role[]> {
-    throw new Error('Method not implemented.');
+  async get(): Promise<Role[]> {
+    const roles = await RoleModel.findAll()
+    return roles
   }
-  update(id: number, change: IUpdateRole): Promise<Role> {
-    throw new Error('Method not implemented.');
+  async update(id: number, change: IUpdateRole): Promise<Role> {
+    const roleUpdate = await RoleModel.update(change, {
+      where: {
+        id
+      },
+      returning: true
+    })
+    return roleUpdate[1][0]
+
   }
-  delete(id: number): void {
-    throw new Error('Method not implemented.');
+
+  async delete(id: number): Promise<number> {
+
+    return await RoleModel.destroy({where: {id}})
+
   }
 
 }

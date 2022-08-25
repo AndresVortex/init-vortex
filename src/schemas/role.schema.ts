@@ -10,7 +10,7 @@ const description = Joi.string();
 export const createRoleSchema = Joi.object({
 
   name: name.required(),
-  description
+  description: description.required()
 
 })
 

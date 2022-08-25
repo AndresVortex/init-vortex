@@ -7,5 +7,5 @@ export default interface RoleRepository {
   getOne(id: IRole['id']): Promise<IRole>;
   get(): Promise<IRole[]>;
   update(id: IRole['id'], change: IUpdateRole): Promise<IRole>;
-  delete(id: IRole['id']): void
+  delete(id: IRole['id']): Promise<number>
 }

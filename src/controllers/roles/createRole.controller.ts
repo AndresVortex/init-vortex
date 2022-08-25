@@ -1,7 +1,6 @@
 import {Request, Response, NextFunction} from 'express'
 import respuesta from '../../helpers/respuesta'
-import IUser from '../../core/entities/User';
-import { listUser } from '../../core/interactors';
+
 import { createRol } from '../../core/interactors/role/index';
 const createRole = async (req: Request, res: Response, next: NextFunction) => {
 

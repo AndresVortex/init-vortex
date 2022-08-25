@@ -5,9 +5,10 @@ import recoveryPassword from '../controllers/auth/recoveryPassword.controller'
 import validatorHandler from '../middlewares/validator.handler';
 import { createRoleSchema, updateRoleSchema, getRoleSchema} from '../schemas/role.schema';
 import changePassword from '../controllers/auth/changePassword.controller';
-import refreshToken from '../controllers/auth/refreshToken.controller'
 import createRole from '../controllers/roles/createRole.controller'
 import getDetailRole from '../controllers/roles/getDetailRole.controller';
+import updateRole from '../controllers/roles/updateRole.controller';
+import deleteRole from '../controllers/roles/deleteRole.controller';
 
 
 const router = Router()
@@ -28,10 +29,13 @@ router.get('/' , changePassword)
 router.get('/:id',validatorHandler(getRoleSchema, 'params') , getDetailRole )
 
 //Ruta para actualizar un rol
-router.put('/:id', validatorHandler(updateRoleSchema, 'body'), validatorHandler(getRoleSchema, 'params'), recoveryPassword )
+router.put('/update/:id',
+validatorHandler(getRoleSchema, 'params'),
+validatorHandler(updateRoleSchema, 'body'),
+  updateRole )
 
 //Ruta para eliminar rol
-router.delete('/:id', validatorHandler(getRoleSchema, 'body'), recoveryPassword )
+router.delete('/delete/:id', validatorHandler(getRoleSchema, 'params'), deleteRole )
 
 export default router
 
