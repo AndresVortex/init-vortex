@@ -18,4 +18,4 @@ export const auth = new Auth(authRepository, userRepository)
 export const listUser = new ListUsers(userRepository)
 
 
-export default saveUser(userRepository,authRepository, notifierRepository)
+// export default saveUser(userRepository,authRepository, notifierRepository)

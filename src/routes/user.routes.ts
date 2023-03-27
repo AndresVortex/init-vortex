@@ -9,15 +9,20 @@ import { changeStatusUserSchema, createUserSchema, getUserSchema, updateUserSche
 import { userRepository } from '../core/interactors/index';
 import { checkRoles } from '../middlewares/auth.handler'
 import { roles } from '../config'
+import { AdapterRoute } from '../adapters/express-adapter';
+import { makeRegisterUserController } from '../factory/user/create-user';
 
 const router = Router()
 
 //Ruta para registrar usuarios
-router.post('/register',
-  passport.authenticate('jwt', { session: false }),
-  validatorHandler(createUserSchema, 'body'),
-  registerUser
-)
+//!V2
+router.post('/register', validatorHandler(createUserSchema, 'body'), AdapterRoute(makeRegisterUserController()) )
+//!V1
+// router.post('/register',
+//   passport.authenticate('jwt', { session: false }),
+//   validatorHandler(createUserSchema, 'body'),
+//   registerUser
+// )
 
 //Ruta para editar usuarios
 router.put('/edit/:id',

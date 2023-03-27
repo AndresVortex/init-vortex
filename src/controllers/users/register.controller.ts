@@ -1,20 +1,54 @@
 
-import saveUser from '../../core/interactors'
-import {Request, Response, NextFunction} from 'express'
-import respuesta from '../../helpers/respuesta'
+
+import { Controller } from '../../core/interfaces/controllers';
+import { HttpRequest, HttpResponse } from '../../core/interfaces/http-interface';
+import { serverError, success } from '../../helpers/http-helper';
+import UserRepository from '../../core/repositories/userRepository';
+import NotifierRepository from '../../core/repositories/notifierRespository';
+
+//*Controlador que se encarga de tener la respuesta http, y se hace inyección de dependencias.
+export default class RegisterUser implements Controller {
+
+  //* Inyección de dependencias
+  constructor(
+    private readonly userRepository: UserRepository,
+    private readonly notifierRepository: NotifierRepository) {
+      this.notifierRepository = notifierRepository
+      this.userRepository = userRepository
+  }
+
+  //* Método para formar respuesta (req, res)
+  async handle(httpRequest: HttpRequest): Promise<HttpResponse> {
 
 
-const registerUser = async(req: Request, res: Response, next: NextFunction) => {
-  try {
-    const { body } = req
+    try {
+      const {name, lastName, dateBirth, email, roleId, password } = httpRequest.body
 
-    const user = await saveUser(body)
+      //* Se usa repositorio para crear el usuario
+      const user = await this.userRepository.create({
+        dateBirth,
+        email,
+        lastName,
+        login: false,
+        name,
+        password,
+        roleId,
+        status: false
+      })
 
-    return respuesta(res, true, 200, 'Registro completado', user)
+      //* Se usa repositorio para notificaciones por correo
+      await this.notifierRepository.notifyUser(user)
 
-  } catch (error) {
-    next(error)
+
+      //* se da respuesta
+      return success(user, 'Usuario Creado')
+
+
+    } catch (error) {
+      return serverError(error)
+
+
+    }
+
   }
 }
-
-export default registerUser
