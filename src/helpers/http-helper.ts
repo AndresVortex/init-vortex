@@ -2,7 +2,7 @@ import { HttpResponse } from '../core/interfaces/http-interface';
 import { ServerError } from './server-error';
 
 
-export const success = (data: any, message: string, success=true) : HttpResponse => ({
+export const success = <T>(data: T, message: string, success=true) : HttpResponse => ({
   statusCode: 200,
   body: data,
   message,

@@ -11,6 +11,7 @@ import { checkRoles } from '../middlewares/auth.handler'
 import { roles } from '../config'
 import { AdapterRoute } from '../adapters/express-adapter';
 import { makeRegisterUserController } from '../factory/user/create-user';
+import { makeGetUsersController } from '../factory/user/get-users';
 
 const router = Router()
 
@@ -35,7 +36,10 @@ router.put('/edit/:id',
 )
 
 //Ruta para listar usuarios
-router.get('/list', getUsers)
+//!V2
+router.get('/list', AdapterRoute(makeGetUsersController()))
+//!V1
+// router.get('/list', getUsers)
 
 
 //Ruta pra deshabilitar usuarios

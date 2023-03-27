@@ -2,16 +2,29 @@ import {Request, Response, NextFunction} from 'express'
 import respuesta from '../../helpers/respuesta'
 import IUser from '../../core/entities/User';
 import { listUser } from '../../core/interactors';
-const getUsers = async (req: Request, res: Response, next: NextFunction) => {
+import { Controller } from '../../core/interfaces/controllers';
+import { HttpRequest, HttpResponse } from '../../core/interfaces/http-interface';
+import { serverError, success } from '../../helpers/http-helper';
+import UserRepository from '../../core/repositories/userRepository';
 
-  try {
 
-    const users = await listUser.handle()
-    return respuesta(res, true, 200, 'Lista de usuarios completa', users)
 
-  } catch (error) {
-    next(error)
+export default class GetUsers implements Controller {
+
+  constructor(
+    private readonly userRepository: UserRepository
+  ){
+    this.userRepository = userRepository
+  }
+  async handle(httpRequest: HttpRequest): Promise<HttpResponse> {
+
+    try {
+      const users = await this.userRepository.find()
+
+      return success<IUser[]>(users, 'Lista de usuarios')
+    } catch (error) {
+
+      return serverError(error)
+    }
   }
 }
-
-export default getUsers
