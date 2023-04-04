@@ -9,6 +9,7 @@ interface IMailOptions {
 }
 export default class EmailNotifier implements NotifierRepository {
   async notifyUser(user: User): Promise<void> {
+
     const mailOptions: SendMailOptions = {
       from: "Nombre del proyecto/empresa",
       to: user.email,
@@ -17,7 +18,7 @@ export default class EmailNotifier implements NotifierRepository {
     }
     await this.sendMail(mailOptions)
   }
-  async sendMail(infoMail: SendMailOptions):Promise<void> {
+  async sendMail(infoMail: SendMailOptions):Promise<string> {
     const transporter = nodemailer.createTransport({
       host: 'smtp.gmail.com',
       secure: true,
@@ -27,9 +28,21 @@ export default class EmailNotifier implements NotifierRepository {
         pass: config.emailPass
       }
     })
+    transporter.verify((error, success) => {
+      if(error){
+        console.log(error);
+      }else{
+        console.log('Servidor corriendo para envío de correo');
+      }
+    })
+    await transporter.sendMail(infoMail, (error, { accepted }) => {
+      if(error){
+        console.log(error);
+      }
+      console.log({accepted} );
+    })
 
-    await transporter.sendMail(infoMail)
-
+    return 'Email enviado'
   }
 
 }
