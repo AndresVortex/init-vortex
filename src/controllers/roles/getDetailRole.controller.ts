@@ -1,17 +1,30 @@
 import {Request, Response, NextFunction} from 'express'
 import respuesta from '../../helpers/respuesta'
+import { Controller } from '../../core/interfaces/controllers';
+import RoleRepository from '../../core/repositories/roleRepository';
+import { HttpRequest, HttpResponse } from '../../core/interfaces/http-interface';
+import { serverError, success } from '../../helpers/http-helper';
+import Role from '../../db/models/role.model';
 
-import { detailRole } from '../../core/interactors/role/index';
-const getDetailRole = async (req: Request, res: Response, next: NextFunction) => {
 
-  try {
-    const id  = parseInt(req.params.id)
-    const role = await detailRole.handle(id)
-    return respuesta(res, true, 200, 'Detalle del role', role )
+export default class GetDetailRole implements Controller {
 
-  } catch (error) {
-    next(error)
+  constructor(
+    private readonly roleRepository: RoleRepository
+  ) {
+    this.roleRepository = roleRepository
+
+  }
+
+
+  async handle(httpRequest: HttpRequest): Promise<HttpResponse> {
+
+    try {
+      const id = httpRequest.params.rolId
+      const rol = await this.roleRepository.getOne(id)
+      return success<Role>(rol, 'Detalle del rol')
+    } catch (error) {
+      return serverError(error)
+    }
   }
 }
-
-export default getDetailRole

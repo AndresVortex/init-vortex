@@ -1,14 +1,13 @@
 import { Router } from 'express'
-import passport from 'passport'
 
-import recoveryPassword from '../controllers/auth/recoveryPassword.controller'
 import validatorHandler from '../middlewares/validator.handler';
-import { createRoleSchema, updateRoleSchema, getRoleSchema} from '../schemas/role.schema';
-import changePassword from '../controllers/auth/changePassword.controller';
-import createRole from '../controllers/roles/createRole.controller'
-import getDetailRole from '../controllers/roles/getDetailRole.controller';
+import { createRoleSchema, updateRoleSchema, getRoleSchema } from '../schemas/role.schema';
 import updateRole from '../controllers/roles/updateRole.controller';
-import deleteRole from '../controllers/roles/deleteRole.controller';
+import { AdapterRoute } from '../adapters/express-adapter';
+import { makeCreateRoleController } from '../factory/role/create-role';
+import { makeDeleteRoleController } from '../factory/role/delete-role';
+import { makeDetailRoleController } from '../factory/role/getOne-role';
+import { makeUpdateRoleController } from '../factory/role/update-role';
 
 
 const router = Router()
@@ -18,24 +17,34 @@ const router = Router()
 
 
 //Ruta para crear rol
-router.post('/', validatorHandler(createRoleSchema, 'body'), createRole )
+router.post('/',
+  validatorHandler(createRoleSchema, 'body'),
+  AdapterRoute(makeCreateRoleController())
+)
 
 
 //Ruta para listar los roles
-router.get('/' , changePassword)
+// router.get('/', changePassword)
 
 
 //Ruta para ver el detalle de un  rol
-router.get('/:id',validatorHandler(getRoleSchema, 'params') , getDetailRole )
+router.get('/:rolId',
+  validatorHandler(getRoleSchema, 'params'),
+  AdapterRoute(makeDetailRoleController())
+)
 
 //Ruta para actualizar un rol
-router.put('/update/:id',
-validatorHandler(getRoleSchema, 'params'),
-validatorHandler(updateRoleSchema, 'body'),
-  updateRole )
+router.put('/:rolId',
+  validatorHandler(getRoleSchema, 'params'),
+  validatorHandler(updateRoleSchema, 'body'),
+  AdapterRoute(makeUpdateRoleController())
+)
 
 //Ruta para eliminar rol
-router.delete('/delete/:id', validatorHandler(getRoleSchema, 'params'), deleteRole )
+router.delete('/:rolId',
+  validatorHandler(getRoleSchema, 'params'),
+  AdapterRoute(makeDeleteRoleController())
+)
 
 export default router
 

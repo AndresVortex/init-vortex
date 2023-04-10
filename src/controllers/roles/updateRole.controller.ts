@@ -1,20 +1,27 @@
 import {Request, Response, NextFunction} from 'express'
-import { updateRoles } from '../../core/interactors/role/index';
 import respuesta from '../../helpers/respuesta'
+import { Controller } from '../../core/interfaces/controllers';
+import { HttpRequest, HttpResponse } from '../../core/interfaces/http-interface';
+import RoleRepository from '../../core/repositories/roleRepository';
+import { serverError, success } from '../../helpers/http-helper';
 
-const updateRole = async (req: Request, res: Response, next: NextFunction) => {
 
-  try {
-    const change = req.body
+export default class UpdateRole implements Controller {
 
-    const id = parseInt(req.params.id)
-    const newRol = await updateRoles.handle(id, change)
+  constructor(
+    private readonly roleRepository: RoleRepository
+  ) {
+    this.roleRepository = roleRepository
 
-    return respuesta(res, true, 200, 'Actualización del rol completa', newRol )
+  }
+  async handle(httpRequest: HttpRequest): Promise<HttpResponse> {
+    try {
 
-  } catch (error) {
-    next(error)
+      const id = httpRequest.params.rolId
+      const role = await this.roleRepository.update(id, httpRequest.body)
+      return success(role, 'Rol actualizado')
+    } catch (error) {
+      return serverError(error)
+    }
   }
 }
-
-export default updateRole

@@ -1,11 +1,13 @@
-import IRole, { ICreateRole, IUpdateRole } from '../entities/Role';
+import Role from '../../db/models/role.model';
+import { IUpdateRole } from '../entities/Role';
+
 
 
 
 export default interface RoleRepository {
-  create(role: ICreateRole): Promise<IRole>;
-  getOne(id: IRole['id']): Promise<IRole>;
-  get(): Promise<IRole[]>;
-  update(id: IRole['id'], change: IUpdateRole): Promise<IRole>;
-  delete(id: IRole['id']): Promise<number>
+  create(role: Role): Promise<Role>;
+  getOne(id: Role['id']): Promise<Role>;
+  get(): Promise<Role[]>;
+  update(id: Role['id'], change: IUpdateRole): Promise<Role>;
+  delete(id: Role['id']): Promise<number>
 }

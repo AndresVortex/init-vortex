@@ -23,7 +23,7 @@ export const updateRoleSchema = Joi.object({
 
 export const getRoleSchema = Joi.object({
 
-  id: id.required()
+  rolId: id.required()
 
 })
 

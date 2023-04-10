@@ -1,17 +1,17 @@
-import {Model, DataType, Sequelize, DataTypes, ModelStatic} from 'sequelize'
+import {Model, DataType, Sequelize, DataTypes, ModelStatic,  InferAttributes, InferCreationAttributes, CreationOptional, NonAttribute, NOW} from 'sequelize'
 import IRole, {ICreateRole} from '../../core/entities/Role';
 import User from './user.model';
 
 export const ROLE_TABLE = 'roles'
 
-export default class Role extends Model<IRole, ICreateRole>{
-  public id!: IRole['id']
-  public name!: IRole['name']
-  public description!: IRole['description']
+export default class Role extends Model<InferAttributes<Role>, InferCreationAttributes<Role>>{
+  declare id: CreationOptional<IRole['id']>
+  declare name: string
+  declare description: string | null
 
    // timestamps!
-  public createdAt!: IRole['createdAt']
-  public updatedAt!: IRole['updatedAt']
+  declare createdAt: Date
+  declare updatedAt: Date
 
 
   //methods
@@ -31,19 +31,34 @@ export default class Role extends Model<IRole, ICreateRole>{
 
 }
 
-export const roleSchema = {
-  id: {
-    type: DataTypes.INTEGER,
-    primaryKey: true,
-    autoIncrement: true
-  },
-  name: {
-    type: DataTypes.STRING,
-    allowNull: false,
-  },
-  description: {
-    type: DataTypes.STRING,
-    allowNull: false,
-  },
 
+export const initRole = (sequelize: Sequelize) => {
+  return Role.init({
+    id: {
+      type: DataTypes.INTEGER,
+      primaryKey: true,
+      autoIncrement: true
+    },
+    name: {
+      type: DataTypes.STRING,
+      allowNull: false,
+    },
+    description: {
+      type: DataTypes.STRING,
+      allowNull: false,
+    },
+    createdAt: {
+      type: DataTypes.DATE,
+      field: 'created_at',
+      defaultValue: NOW
+    },
+    updatedAt: {
+      type: DataTypes.DATE,
+      field: 'updated_at',
+      defaultValue: NOW
+    }
+
+  }, Role.config(sequelize))
 }
+
+

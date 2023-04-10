@@ -1,11 +1,12 @@
-import Role, { ICreateRole, IUpdateRole } from '../core/entities/Role';
+import { ICreateRole, IUpdateRole } from '../core/entities/Role';
 import RoleRepository from '../core/repositories/roleRepository';
 import RoleModel from '../db/models/role.model';
 import boom from '@hapi/boom';
+import Role from '../db/models/role.model';
 
 
 export default class RoleDataSource implements RoleRepository {
-  async create(role: ICreateRole): Promise<Role> {
+  async create(role: Role): Promise<Role> {
 
     const newRole = await RoleModel.create(role)
 

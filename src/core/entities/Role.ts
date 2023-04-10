@@ -2,9 +2,9 @@
 export default interface IRole  {
   id: number,
   name: string,
-  description: string,
-  createdAt?: Date,
-  updatedAt?: Date,
+  description: string | null,
+  createdAt: Date,
+  updatedAt: Date,
 }
 
 export interface ICreateRole extends Omit<IRole, 'id' | 'createdAt' | 'updatedAt' > {

@@ -33,7 +33,8 @@ export default class RegisterUser implements Controller {
         name,
         password,
         roleId,
-        status: false
+        status: false,
+        recoveryToken: null
       })
 
       //* Se usa repositorio para notificaciones por correo
