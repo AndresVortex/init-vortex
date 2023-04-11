@@ -10,8 +10,8 @@ export default class Role extends Model<InferAttributes<Role>, InferCreationAttr
   declare description: string | null
 
    // timestamps!
-  declare createdAt: Date
-  declare updatedAt: Date
+   declare createdAt: CreationOptional<Date>
+   declare updatedAt: CreationOptional<Date>
 
 
   //methods

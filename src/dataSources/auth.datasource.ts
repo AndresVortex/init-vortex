@@ -11,6 +11,7 @@ import AuthRepository from '../core/repositories/authRepository';
 import UserDataSource from './user.datasource'
 import EmailNotifier from './emailNotify.datasource';
 import { Payload } from '../core/repositories/authRepository';
+import User from '../db/models/user.model';
 const userDataSource = new UserDataSource()
 const emailDataSource = new EmailNotifier()
 
@@ -22,17 +23,14 @@ export default class AuthDataSource implements AuthRepository {
     const token = jwt.sign(payload, config.secret, {expiresIn: '2h'})
     return token
   }
-  async sendRecovery(email: string): Promise<void> {
-    const user =   await userDataSource.getByEmail(email)
-    if(!user){
-      throw (boom.unauthorized())
-    }
+  async sendRecovery( user: User): Promise<void> {
+
     const payload = {
       sub: user.id
     }
     const token = jwt.sign(payload,config.secretPassword, {expiresIn: '15min'})
     const link = `https://urlfront/recovery?token=${token}`
-    await userDataSource.update(user.id, {recoveryToken: token })
+    await user.update( {recoveryToken: token })
     const mail = {
       from: config.emailUser,
       to: `${user.email}`,
@@ -51,19 +49,13 @@ export default class AuthDataSource implements AuthRepository {
     }
     return user
   }
-  async changePassword(token: string, newPassword: string): Promise<void> {
+  async changePassword(token: string, newPassword: string, user: User): Promise<void> {
     try {
-
-      const {sub } = jwt.verify(token, config.secretPassword)
-
-      const id = parseInt(sub as string)
-      const user = await userDataSource.getById(id)
-
       if (user.recoveryToken !== token) {
         throw boom.unauthorized()
       }
       const hash = await bcrypt.hash(newPassword, 10)
-      userDataSource.update(user.id, {password: hash, recoveryToken: ''})
+      user.update({password: hash, recoveryToken: ''})
     } catch (error) {
       throw boom.unauthorized('Error al cambiar a contraseña')
     }
@@ -81,5 +73,6 @@ export default class AuthDataSource implements AuthRepository {
 
     return ''
   }
+
 
 }

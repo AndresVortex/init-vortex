@@ -6,7 +6,8 @@ export const AdapterRoute = (controller: Controller) => {
     const httpRequest: HttpRequest = {
       body: req.body,
       params: req.params,
-      query: req.query
+      query: req.query,
+      user: req.user
     }
 
     const httpResponse = await controller.handle(httpRequest)

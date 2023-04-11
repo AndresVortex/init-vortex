@@ -2,15 +2,15 @@ import bcrypt from 'bcrypt'
 import  { UpdateUser } from '../core/entities/User';
 import UserRepository from '../core/repositories/userRepository';
 // import sequelize from '../libs/sequelize'
-import UserModel from '../db/models/user.model'
+import UserModel, { User } from '../db/models/user.model'
 import { CreateUser } from '../core/entities/User';
 import Boom from '@hapi/boom';
-import IUser from '../core/entities/User';
+
 
 
 export default class UserDataSource implements UserRepository {
 
-  public async create(user: CreateUser): Promise<IUser> {
+  public async create(user: User): Promise<User> {
 
 
     const hash = await bcrypt.hash(user.password, 10)
@@ -22,7 +22,7 @@ export default class UserDataSource implements UserRepository {
     return newUser
 
   }
-  async getByEmail(email: string): Promise<IUser> {
+  async getByEmail(email: string): Promise<User> {
     const user = await UserModel.findOne({
       where: {
         email
@@ -33,7 +33,7 @@ export default class UserDataSource implements UserRepository {
     }
     return user
   }
-  async getById(id: number): Promise<IUser> {
+  async getById(id: number): Promise<User> {
 
     const user = await UserModel.findByPk(id)
 
@@ -43,19 +43,14 @@ export default class UserDataSource implements UserRepository {
     return user
   }
 
-  async update(id: number, changes: UpdateUser): Promise<IUser> {
-    await this.getById(id)
+  async update(id: number, changes: User): Promise<User> {
+    const user = await this.getById(id)
 
-    const userUpdate = await UserModel.update(changes, {
-      where: {
-        id
-      },
-      returning: true
-    })
+    const userUpdate = await user.update(changes)
 
-    return userUpdate[1][0]
+    return userUpdate
   }
-  async find(): Promise<IUser[]> {
+  async find(): Promise<User[]> {
     const user = await UserModel.findAll({
       include: ['role']
     })

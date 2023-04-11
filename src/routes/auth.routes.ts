@@ -1,13 +1,12 @@
 import { Router } from 'express'
 import passport from 'passport'
 
-import Login from '../controllers/auth/login.controller'
-import logOut from '../controllers/auth/logout.controller'
-import recoveryPassword from '../controllers/auth/recoveryPassword.controller'
 import validatorHandler from '../middlewares/validator.handler';
 import { recoveryPassSchema, changePasswordSchema } from '../schemas/auth.schema';
 import changePassword from '../controllers/auth/changePassword.controller';
-import refreshToken from '../controllers/auth/refreshToken.controller'
+import { AdapterRoute } from '../adapters/express-adapter';
+import { makeChangePasswordController } from '../factory/auth/change-password';
+import { makeLoginUserController } from '../factory/auth/login';
 
 
 const router = Router()
@@ -16,23 +15,23 @@ const router = Router()
 // Ruta para iniciar sesión
 router.post('/login',
   passport.authenticate('local', {session: false}),
-  Login
+  AdapterRoute(makeLoginUserController())
 )
 
 
 //Ruta para cerrar sesión
-router.get('/logout', passport.authenticate('jwt', { session: false }), logOut)
+// router.get('/logout', passport.authenticate('jwt', { session: false }), logOut)
 
 //Ruta para recuperar contraseña (envio de correo)
-router.post('/recovery', validatorHandler(recoveryPassSchema, 'body'), recoveryPassword )
+// router.post('/recovery', validatorHandler(recoveryPassSchema, 'body'), recoveryPassword )
 
 
 //Ruta para cambiar la contraseña
-router.post('/change-password', validatorHandler(changePasswordSchema, 'body'), changePassword)
+router.post('/change-password', validatorHandler(changePasswordSchema, 'body'), AdapterRoute(makeChangePasswordController()))
 
 
 //Ruta para refrescar token
-router.get('/refresh-token', passport.authenticate('jwt', {session: false} ), refreshToken )
+// router.get('/refresh-token', passport.authenticate('jwt', {session: false} ), refreshToken )
 
 export default router
 

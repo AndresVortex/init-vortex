@@ -1,16 +1,15 @@
-import {Model, DataType, Sequelize, DataTypes, ModelStatic, InferAttributes, InferCreationAttributes, CreationOptional, NonAttribute, NOW, ModelAttributes} from 'sequelize'
-import IUser from '../../core/entities/User'
-import { CreateUser } from '../../core/entities/User';
-import Role, {ROLE_TABLE} from './role.model';
-import { config } from '../../config/index';
+import { Model, Sequelize, DataTypes, ModelStatic, InferAttributes, InferCreationAttributes, CreationOptional, NonAttribute, NOW } from 'sequelize'
 
-export const USER_TABLET = ' users'
+import Role, { ROLE_TABLE } from './role.model';
 
+
+export const USER_TABLET = 'users'
 
 
 
 
-export class User extends Model<InferAttributes<User, {omit: 'rol'}>, InferCreationAttributes<User, {omit: 'rol'}> > {
+
+export class User extends Model<InferAttributes<User, { omit: 'rol' }>, InferCreationAttributes<User, { omit: 'rol' }>> {
   declare id: CreationOptional<number>
   declare name: string
   declare lastName: string
@@ -31,7 +30,7 @@ export class User extends Model<InferAttributes<User, {omit: 'rol'}>, InferCreat
 
 
   //methods
-  static associate( model: ModelStatic<Role>) {
+  static associate(model: ModelStatic<Role>) {
     //models associate
     this.belongsTo(model, { as: 'role' })
   }
@@ -46,74 +45,74 @@ export class User extends Model<InferAttributes<User, {omit: 'rol'}>, InferCreat
 
 }
 
-export const initUser = ( sequelize: Sequelize) => {
+export const initUser = (sequelize: Sequelize) => {
   return User.init(
     {
-    id: {
-      type: DataTypes.INTEGER,
-      primaryKey: true,
-      autoIncrement: true
-    },
-    name: {
-      type: DataTypes.STRING,
-      allowNull: false,
-    },
-    lastName: {
-      type: DataTypes.STRING,
-      allowNull: false,
-    },
-    email: {
-      type: DataTypes.STRING,
-      allowNull: false,
-      unique: true
-    },
-    password: {
-      type: DataTypes.STRING,
-      allowNull: false,
-    },
-    dateBirth: {
-      type: DataTypes.DATE,
-      allowNull: true,
-      field: 'date_birth'
-    },
-
-    status: {
-      type: DataTypes.BOOLEAN,
-      allowNull: false,
-      defaultValue: false
-    },
-    login: {
-      type: DataTypes.BOOLEAN,
-      allowNull: false,
-      defaultValue: false
-    },
-    recoveryToken: {
-      allowNull: true,
-      field: 'recovery_token',
-      type: DataTypes.STRING,
-    },
-    roleId: {
-      field: 'role_id',
-      type: DataTypes.INTEGER,
-      allowNull: false,
-      references: {
-        model: ROLE_TABLE,
-        key: 'id'
+      id: {
+        type: DataTypes.INTEGER,
+        primaryKey: true,
+        autoIncrement: true
       },
-      onUpdate: 'CASCADE',
-      onDelete: 'SET NULL'
+      name: {
+        type: DataTypes.STRING,
+        allowNull: false,
+      },
+      lastName: {
+        type: DataTypes.STRING,
+        allowNull: false,
+      },
+      email: {
+        type: DataTypes.STRING,
+        allowNull: false,
+        unique: true
+      },
+      password: {
+        type: DataTypes.STRING,
+        allowNull: false,
+      },
+      dateBirth: {
+        type: DataTypes.DATE,
+        allowNull: true,
+        field: 'date_birth'
+      },
 
-    },
-    createdAt: {
-      type: DataTypes.DATE,
-      field: 'created_at',
-      defaultValue: NOW
-    },
-    updatedAt: {
-      type: DataTypes.DATE,
-      field: 'updated_at',
-      defaultValue: NOW
-    }
+      status: {
+        type: DataTypes.BOOLEAN,
+        allowNull: false,
+        defaultValue: false
+      },
+      login: {
+        type: DataTypes.BOOLEAN,
+        allowNull: false,
+        defaultValue: false
+      },
+      recoveryToken: {
+        allowNull: true,
+        field: 'recovery_token',
+        type: DataTypes.STRING,
+      },
+      roleId: {
+        field: 'role_id',
+        type: DataTypes.INTEGER,
+        allowNull: false,
+        references: {
+          model: ROLE_TABLE,
+          key: 'id'
+        },
+        onUpdate: 'CASCADE',
+        onDelete: 'SET NULL'
+
+      },
+      createdAt: {
+        type: DataTypes.DATE,
+        field: 'created_at',
+        defaultValue: NOW
+      },
+      updatedAt: {
+        type: DataTypes.DATE,
+        field: 'updated_at',
+        defaultValue: NOW
+      }
     }, User.config(sequelize)
   )
 }

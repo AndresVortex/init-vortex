@@ -5,7 +5,6 @@ import rolRouter from './rol.routes'
 
 import validatorSession from '../middlewares/validate.sesion';
 import passport from 'passport';
-import { userRepository } from '../core/interactors/index';
 
 export default function routesApi(app: Express) {
   const router = Router()

@@ -25,7 +25,7 @@ class Server {
     try {
       await sequelize.sync({force: false})
 
-      console.log('Db conectada')
+      console.log('Db conectada!!')
 
     } catch (error) {
       console.log(error)

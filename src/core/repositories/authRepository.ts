@@ -1,4 +1,5 @@
 import IUser from '../entities/User';
+import User from '../../db/models/user.model';
 
 export interface Payload {
   sub: number,
@@ -8,7 +9,8 @@ export interface Payload {
 export default interface AuthRepository {
   getUser(email: string, password: string): Promise<IUser>
   signToken(payload: Payload ): string;
-  sendRecovery(email: IUser['email']): Promise<void>;
-  changePassword(token: string, newPassword: IUser['password']): Promise<void>
+  sendRecovery(user: User): Promise<void>;
+  changePassword(token: string, newPassword: IUser['password'], user: User): Promise<void>
   refreshToken(token: string): Promise<string>;
+  // generateToken(payload: Payload): string;
 }
