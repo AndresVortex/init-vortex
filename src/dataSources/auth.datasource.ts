@@ -23,19 +23,19 @@ export default class AuthDataSource implements AuthRepository {
     const token = jwt.sign(payload, config.secret, {expiresIn: '2h'})
     return token
   }
-  async sendRecovery( user: User): Promise<void> {
+  async sendRecovery( user: User, code: string): Promise<void> {
 
     const payload = {
       sub: user.id
     }
     const token = jwt.sign(payload,config.secretPassword, {expiresIn: '15min'})
     const link = `https://urlfront/recovery?token=${token}`
-    await user.update( {recoveryToken: token })
+    await user.update( {recoveryToken: token, code })
     const mail = {
       from: config.emailUser,
       to: `${user.email}`,
       subject: "Recuperar contraseña",
-      html: `<h1> Ingresa a este link para recuperar la contraseña  --> ${link} </h1>`
+      html: `<h1> Ingresa a este link para recuperar la contraseña  --> ${link} y este es el código ${code} </h1>`
     }
     emailDataSource.sendMail(mail)
   }
@@ -49,13 +49,17 @@ export default class AuthDataSource implements AuthRepository {
     }
     return user
   }
-  async changePassword(token: string, newPassword: string, user: User): Promise<void> {
+  async changePassword(token: string, newPassword: string, user: User, code: string): Promise<void> {
     try {
       if (user.recoveryToken !== token) {
         throw boom.unauthorized()
       }
+      if (user.code !== code){
+        throw boom.unauthorized()
+
+      }
       const hash = await bcrypt.hash(newPassword, 10)
-      user.update({password: hash, recoveryToken: ''})
+      await user.update({password: hash, recoveryToken: '', code: '' })
     } catch (error) {
       throw boom.unauthorized('Error al cambiar a contraseña')
     }

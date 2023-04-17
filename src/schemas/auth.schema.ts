@@ -15,6 +15,7 @@ export const recoveryPassSchema = Joi.object({
 export const changePasswordSchema = Joi.object({
 
   token: token.required(),
-  newPassword: newPassword.required()
+  newPassword: newPassword.required(),
+  code: token.required()
 
 })

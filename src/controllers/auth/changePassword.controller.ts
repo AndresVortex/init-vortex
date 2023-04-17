@@ -35,7 +35,7 @@ export default class ChangePassword implements Controller {
   async handle(httpRequest: HttpRequest): Promise<HttpResponse> {
 
     try {
-      const {token, newPassword} = httpRequest.body
+      const {token, newPassword, code} = httpRequest.body
 
       //Verificar token
       const { sub } = jwt.verify(token, config.secretPassword)
@@ -44,8 +44,9 @@ export default class ChangePassword implements Controller {
       const id = parseInt(sub as string)
       const user = await this.userRepository.getById(id)
 
+
       //Enviar usuario para cambio de contraseña
-      await this.authRepository.changePassword(token, newPassword, user)
+      await this.authRepository.changePassword(token, newPassword, user, code)
 
 
       return success({}, 'Cambio de contraseña exitoso')

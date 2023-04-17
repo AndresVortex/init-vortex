@@ -7,6 +7,8 @@ import changePassword from '../controllers/auth/changePassword.controller';
 import { AdapterRoute } from '../adapters/express-adapter';
 import { makeChangePasswordController } from '../factory/auth/change-password';
 import { makeLoginUserController } from '../factory/auth/login';
+import { makeLogOutUserController } from '../factory/auth/logout';
+import { makeRecoveryPasswordController } from '../factory/auth/recovery-password';
 
 
 const router = Router()
@@ -20,10 +22,13 @@ router.post('/login',
 
 
 //Ruta para cerrar sesión
-// router.get('/logout', passport.authenticate('jwt', { session: false }), logOut)
+router.get('/logout',
+  passport.authenticate('jwt', { session: false }),
+  AdapterRoute(makeLogOutUserController())
+)
 
 //Ruta para recuperar contraseña (envio de correo)
-// router.post('/recovery', validatorHandler(recoveryPassSchema, 'body'), recoveryPassword )
+router.post('/recovery', validatorHandler(recoveryPassSchema, 'body'), AdapterRoute(makeRecoveryPasswordController()) )
 
 
 //Ruta para cambiar la contraseña

@@ -9,8 +9,8 @@ export interface Payload {
 export default interface AuthRepository {
   getUser(email: string, password: string): Promise<IUser>
   signToken(payload: Payload ): string;
-  sendRecovery(user: User): Promise<void>;
-  changePassword(token: string, newPassword: IUser['password'], user: User): Promise<void>
+  sendRecovery(user: User, code: string): Promise<void>;
+  changePassword(token: string, newPassword: IUser['password'], user: User, code: string): Promise<void>
   refreshToken(token: string): Promise<string>;
   // generateToken(payload: Payload): string;
 }

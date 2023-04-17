@@ -20,6 +20,7 @@ export class User extends Model<InferAttributes<User, { omit: 'rol' }>, InferCre
   declare status: boolean
   declare login: boolean
   declare recoveryToken: string | null
+  declare code: string | null
   declare rol?: NonAttribute<Role[]>;
 
   // timestamps!
@@ -44,6 +45,7 @@ export class User extends Model<InferAttributes<User, { omit: 'rol' }>, InferCre
   }
 
 }
+
 
 export const initUser = (sequelize: Sequelize) => {
   return User.init(
@@ -90,6 +92,11 @@ export const initUser = (sequelize: Sequelize) => {
         allowNull: true,
         field: 'recovery_token',
         type: DataTypes.STRING,
+      },
+      code: {
+        allowNull: true,
+        type: DataTypes.STRING,
+        unique: true,
       },
       roleId: {
         field: 'role_id',
