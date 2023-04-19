@@ -1,7 +1,7 @@
 
 import IUser from '../../core/entities/User';
 import { Controller } from '../../core/interfaces/controllers';
-import { HttpRequest, HttpResponse } from '../../core/interfaces/http-interface';
+import { HttpRequest, HttpResponse, HttpNext } from '../../core/interfaces/http-interface';
 import { serverError, success } from '../../helpers/http-helper';
 import UserRepository from '../../core/repositories/userRepository';
 
@@ -24,6 +24,7 @@ export default class UpdateUser implements Controller {
 
       return success<IUser>(user, 'Usuario actualizado')
     } catch (error) {
+
       return serverError(error)
     }
   }

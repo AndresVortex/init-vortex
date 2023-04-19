@@ -53,7 +53,7 @@ export default class LoginUser implements Controller {
             const userLogin = await this.userRepository.update(user.dataValues.id, {login: true})
             return success({user: userLogin, token}, 'Login exitoso')
         } catch (error) {
-          console.log(error);
+            console.log("🚀 ~ file: login.controller.ts:56 ~ LoginUser ~ handle ~ error:", error)
             return serverError(error)
         }
     }

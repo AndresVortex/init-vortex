@@ -1,3 +1,4 @@
+import { NextFunction } from 'express';
 export interface HttpResponse {
   statusCode: number
   body: any,
@@ -10,4 +11,7 @@ export interface HttpRequest {
   params?: any,
   query?: any,
   user?: any
+}
+export interface HttpNext {
+  next: NextFunction
 }

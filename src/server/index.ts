@@ -28,7 +28,8 @@ class Server {
       console.log('Db conectada!!')
 
     } catch (error) {
-      console.log(error)
+      console.log("🚀 ~ file: index.ts:31 ~ Server ~ db ~ error:", error)
+      // console.log(error)
     }
   }
 

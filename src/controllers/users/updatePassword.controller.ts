@@ -30,7 +30,6 @@ export default class UpdatePassword implements Controller {
       await this.userRepository.update(id, {password})
       return success<{}>({}, 'Contraseña cambiada')
     } catch (error) {
-
       return serverError(error)
     }
   }

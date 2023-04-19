@@ -38,7 +38,9 @@ export default class UserDataSource implements UserRepository {
     const user = await UserModel.findByPk(id)
 
     if (!user) {
-      throw Boom.badRequest()
+
+      throw Boom.badRequest('Este usuario no existe en la base de datos')
+
     }
     return user
   }

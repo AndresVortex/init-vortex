@@ -1,5 +1,6 @@
-import { HttpRequest, HttpResponse } from './http-interface';
+import { HttpRequest, HttpResponse, HttpNext } from './http-interface';
+import { NextFunction } from 'express';
 
 export interface Controller {
-    handle(httpRequest: HttpRequest): Promise<HttpResponse>
+    handle(httpRequest: HttpRequest, httpNext: HttpNext['next']): Promise<HttpResponse>
 }

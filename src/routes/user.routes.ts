@@ -1,12 +1,9 @@
 import { Router } from 'express'
 import passport from 'passport'
-import getUsers from '../controllers/users/getUsers.controller'
-import registerUser from '../controllers/users/register.controller'
-import updateUser from '../controllers/users/update.controllers'
+
 import validatorSession from '../middlewares/validate.sesion'
 import validatorHandler from '../middlewares/validator.handler'
 import { changeStatusUserSchema, createUserSchema, getUserSchema, updateUserSchema, updatePasswordSchema } from '../schemas/user.schema';
-import { userRepository } from '../core/interactors/index';
 import { checkRoles } from '../middlewares/auth.handler'
 import { roles } from '../config'
 import { AdapterRoute } from '../adapters/express-adapter';

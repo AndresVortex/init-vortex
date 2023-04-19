@@ -25,7 +25,6 @@ export function checkAdminRole(req: Request, res: Response, next: NextFunction){
 export function checkRoles (...roles: number[]){
   return (req: Request, res: Response, next: NextFunction ) => {
     const user: any = req.user;
-    console.log({user})
   if(roles.includes(parseInt(user.role))){
     next()
   }else {
